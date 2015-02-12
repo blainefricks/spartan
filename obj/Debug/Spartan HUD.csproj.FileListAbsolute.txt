@@ -1,0 +1,7 @@
+C:\Users\Staples\Documents\Repositories\Visual Studio Online\Spartan HUD\Spartan HUD\Spartan HUD\bin\Debug\Spartan HUD.exe.config
+C:\Users\Staples\Documents\Repositories\Visual Studio Online\Spartan HUD\bin\Debug\Spartan HUD.exe.config
+C:\Users\Staples\Documents\Repositories\Visual Studio Online\Spartan HUD\bin\Debug\Spartan HUD.exe
+C:\Users\Staples\Documents\Repositories\Visual Studio Online\Spartan HUD\bin\Debug\Spartan HUD.pdb
+C:\Users\Staples\Documents\Repositories\Visual Studio Online\Spartan HUD\obj\Debug\Spartan HUD.csprojResolveAssemblyReference.cache
+C:\Users\Staples\Documents\Repositories\Visual Studio Online\Spartan HUD\obj\Debug\Spartan HUD.exe
+C:\Users\Staples\Documents\Repositories\Visual Studio Online\Spartan HUD\obj\Debug\Spartan HUD.pdb
