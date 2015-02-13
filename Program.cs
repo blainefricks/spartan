@@ -15,16 +15,16 @@ namespace Spartan_HUD
             Console.WriteLine("Eye Coordinates");
             Console.Write("x = ");
             double a1 = Convert.ToDouble(Console.ReadLine()); // Console Input Build
-            // double a1 = 1; // SublimeText 3 console build
-            // Console.WriteLine(a1); // SublimeText 3 console build
+            // double a1 = 0; // Debug
+            // Console.WriteLine(a1); // Debug
             Console.Write("y = ");
             double a2 = Convert.ToDouble(Console.ReadLine()); // Console Input Build
-            // double a2 = 1; // SublimeText 3 console build
-            // Console.WriteLine(a2); // SublimeText 3 console build
+            // double a2 = 0; // Debug
+            // Console.WriteLine(a2); // Debug
             Console.Write("z = ");
             double a3 = Convert.ToDouble(Console.ReadLine()); // Console Input Build
-            // double a3 = 1; // SublimeText 3 console build
-            // Console.WriteLine(a3); // SublimeText 3 console build
+            // double a3 = 0; // Debug
+            // Console.WriteLine(a3); // Debug
 
             Console.WriteLine("");
 
@@ -32,24 +32,24 @@ namespace Spartan_HUD
             Console.WriteLine("Gun Coordinates");
             Console.Write("x = ");
             double b1 = Convert.ToDouble(Console.ReadLine()); // Console Input Build
-            // double b1 = 1; // SublimeText 3 console build
-            // Console.WriteLine(b1); // SublimeText 3 console build
+            // double b1 = 1; // Debug
+            // Console.WriteLine(b1); // Debug
             Console.Write("y = ");
             double b2 = Convert.ToDouble(Console.ReadLine()); // Console Input Build
-            // double b2 = 1; // SublimeText 3 console build
-            // Console.WriteLine(b2); // SublimeText 3 console build
+            // double b2 = 1; // Debug
+            // Console.WriteLine(b2); // Debug
             Console.Write("z = ");
             double b3 = Convert.ToDouble(Console.ReadLine()); // Console Input Build
-            // double b3 = -1; // SublimeText 3 console build
-            // Console.WriteLine(b3); // SublimeText 3 console build
+            // double b3 = -1; // Debug
+            // Console.WriteLine(b3); // Debug
 
             Console.WriteLine("");
 
             // Distance from pointB to pointC
             Console.Write("Distance from Gun to Target: ");
             double distanceBC = Convert.ToDouble(Console.ReadLine()); // Console Input Build
-            // double distanceBC = 10.53205080756888; // SublimeText 3 console build
-            // Console.WriteLine(distanceBC); // SublimeText 3 console build
+            // double distanceBC = 20; // Debug
+            // Console.WriteLine(distanceBC); // Debug
 
             Console.WriteLine("");
 
@@ -57,17 +57,17 @@ namespace Spartan_HUD
             Console.WriteLine("Angle's of Gun ");
             Console.Write("zy angle = ");
             double phiB = DegreeToRadian(Convert.ToDouble(Console.ReadLine())); // Console Input Build
-            // double phiB = 85.23; // SublimeText 3 console build
-            // Console.WriteLine(phiB); // SublimeText 3 console build
+            // double phiB = DegreeToRadian(90); // Debug
+            // Console.WriteLine(RadianToDegree(phiB)); // Debug
             Console.Write("xy angle = ");
             double thetaB = DegreeToRadian(Convert.ToDouble(Console.ReadLine())); // Console Input Build
-            // double thetaB = 120.45; // SublimeText 3 console build
-            // Console.WriteLine(thetaB); // SublimeText 3 console build
+            // double thetaB = DegreeToRadian(110); // Debug
+            // Console.WriteLine(RadianToDegree(thetaB)); // Debug
 
             // Three Points
             double[] pointA = { a1, a2, a3 }; // eye coordinate
             double[] pointB = { b1, b2, b3 }; // gun coordinate
-            double[] pointC = SphericalCoordinate(distanceBC, phiB, thetaB); // target coordinate
+            double[] pointC = SphericalCoordinate(distanceBC, phiB, thetaB, pointB); // target coordinate
 
             double distanceAB = DistanceBetween(pointA,pointB);
 
@@ -103,12 +103,11 @@ namespace Spartan_HUD
             double distanceAB = Math.Sqrt( Math.Pow(xd,2) + Math.Pow(yd,2) + Math.Pow(zd,2) );
             return distanceAB;
         }
-        private static double[] SphericalCoordinate(double rho, double phi, double theta)
+        private static double[] SphericalCoordinate(double rho, double phi, double theta, double[] origin)
         {
-            // Point C
-            double x = rho * Math.Sin(phi) * Math.Cos(theta);
-            double y = rho * Math.Sin(phi) * Math.Sin(theta);
-            double z = rho * Math.Cos(phi);
+            double x = (rho * Math.Sin(phi) * Math.Cos(theta)) + origin[0];
+            double y = (rho * Math.Sin(phi) * Math.Sin(theta)) + origin[1];
+            double z = (rho * Math.Cos(phi)) + origin[2];
 
             double[] point = { x, y, z };
             return point;
@@ -130,13 +129,13 @@ namespace Spartan_HUD
             double theta = Math.Acos(DotProduct(vector0,vector1)/(Magnitude(vector0)*Magnitude(vector1)));
             return theta;
         }
-        private static double[] VectorFromPoints(double[] pointP, double[] pointQ)
+        private static double[] VectorFromPoints(double[] point0, double[] point1)
         {
-            double x = pointQ[0] - pointP[0];
-            double y = pointQ[1] - pointP[1];
-            double z = pointQ[2] - pointP[2];
-            double[] vectorPQ = { x, y, z };
-            return vectorPQ;
+            double x = point1[0] - point0[0];
+            double y = point1[1] - point0[1];
+            double z = point1[2] - point0[2];
+            double[] vector = { x, y, z };
+            return vector;
         }
         private static double SolveTriangleSAS(double side0, double angle, double side1)
         {
