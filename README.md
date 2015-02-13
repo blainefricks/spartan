@@ -1,7 +1,15 @@
 ﻿# Spartan HUD
 
-This is the Read Me for the Spartan HUD Project for HoloLens.
+This progaram finds the 3D coordinates of where your gun is pointing and projects a target reticle using Microsoft HoloLens.
 
-## feature/HelloWorld
-This branch contains tutorial files from the C# Fundamentals for Absolute Beginners class at Microsoft Virtual Acadamy
-http://www.microsoftvirtualacademy.com/training-courses/c-fundamentals-for-absolute-beginners
+Since HoloLens has yet to be released, this is just a console application that calculates the unknown coordinates.
+
+## Windows
+Open `Program.exe` to launch the console application.
+
+## Mac
+C# programs don't run natively on Macs, so Mono is needed. [Download here] (http://www.mono-project.com/download/).
+Once Mono is installed, open Terminal and run:
+```
+mono .../Program.exe
+```
