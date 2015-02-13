@@ -56,65 +56,93 @@ namespace Spartan_HUD
             // Angle at pointB
             Console.WriteLine("Angle's of Gun ");
             Console.Write("zy angle = ");
-            double phiB = Convert.ToDouble(Console.ReadLine()); // Console Input Build
+            double phiB = DegreeToRadian(Convert.ToDouble(Console.ReadLine())); // Console Input Build
             // double phiB = 85.23; // SublimeText 3 console build
             // Console.WriteLine(phiB); // SublimeText 3 console build
-            Console.Write("xy = ");
-            double thetaB = Convert.ToDouble(Console.ReadLine()); // Console Input Build
+            Console.Write("xy angle = ");
+            double thetaB = DegreeToRadian(Convert.ToDouble(Console.ReadLine())); // Console Input Build
             // double thetaB = 120.45; // SublimeText 3 console build
             // Console.WriteLine(thetaB); // SublimeText 3 console build
 
             // Three Points
             double[] pointA = { a1, a2, a3 }; // eye coordinate
-            double[] pointB = { b1, b2, b3 }; // aim coordinate
-            double[] pointC = sphericalCoordinate(distanceBC, phiB, thetaB); // target coordinate
+            double[] pointB = { b1, b2, b3 }; // gun coordinate
+            double[] pointC = SphericalCoordinate(distanceBC, phiB, thetaB); // target coordinate
 
-            double distanceAB = distanceBetween(pointA,pointB);
-            double distanceAC = distanceBetween(pointA,pointC);
+            double distanceAB = DistanceBetween(pointA,pointB);
+
+            double[] vectorBA = VectorFromPoints(pointB, pointA);
+            double[] vectorBC = VectorFromPoints(pointB, pointC);
+            double angleABC = AngleBetweenVectors(vectorBA, vectorBC);
+            double distanceAC = SolveTriangleSAS(distanceAB, angleABC, distanceBC);
 
             Console.WriteLine("");
             Console.WriteLine("Distance From Eye to Gun    =~ {0}ft", distanceAB);
             Console.WriteLine("Distance From Gun to Target =~ {0}ft", distanceBC);
             Console.WriteLine("Distance From Eye to Target =~ {0}ft", distanceAC);
             Console.WriteLine("---------------------------");
-            Console.WriteLine("Reticle Placement           =~ ({0},{1},{2})", pointC[0],pointC[1],pointC[2]);
+            Console.WriteLine("Reticle Placement           =~ ( {0}ft, {1}ft, {2}ft )", pointC[0],pointC[1],pointC[2]);
             Console.ReadLine();
         }
-        private static double distanceBetween(double[] pointA, double[] pointB)
+        private static double RadianToDegree(double angle)
+        {
+            return angle * (180.0 / Math.PI);
+        }
+        private static double DegreeToRadian(double angle)
+        {
+            return Math.PI * angle / 180.0;
+        }
+        private static double DistanceBetween(double[] point0, double[] point1)
         {
             // Distance Between Two Known Points Formula
             // d = SquareRoot(xd^2 + yd^2 + zd^2)
-            double xd = pointB[0] - pointA[0];
-            double yd = pointB[1] - pointA[1];
-            double zd = pointB[2] - pointA[2];
+            double xd = point1[0] - point0[0];
+            double yd = point1[1] - point0[1];
+            double zd = point1[2] - point0[2];
 
-            double distanceAB = Math.Sqrt( Math.Pow(xd,2) + Math.Pow(yd,2) + Math.Pow(zd,2) );// d = SquareRoot(xd^2 + yd^2 + zd^2)
+            double distanceAB = Math.Sqrt( Math.Pow(xd,2) + Math.Pow(yd,2) + Math.Pow(zd,2) );
             return distanceAB;
         }
-        private static double[] sphericalCoordinate(double row, double phi, double theta)
+        private static double[] SphericalCoordinate(double rho, double phi, double theta)
         {
             // Point C
-            double c1 = row * Math.Sin(phi) * Math.Cos(theta); // x
-            double c2 = row * Math.Sin(phi) * Math.Sin(theta); // y
-            double c3 = row * Math.Cos(phi); // z
+            double x = rho * Math.Sin(phi) * Math.Cos(theta);
+            double y = rho * Math.Sin(phi) * Math.Sin(theta);
+            double z = rho * Math.Cos(phi);
 
-            double[] pointC = { c1, c2, c3 };
-            return pointC;
+            double[] point = { x, y, z };
+            return point;
         }
-        private static double dotProduct(double[] vector1, double[] vector2)
+        private static double DotProduct(double[] vector0, double[] vector1)
         {
-            double dotProd = vector1[0] * vector2[0] + vector1[1] * vector2[1] + vector1[2] * vector2[2];
+            double dotProd = vector0[0] * vector1[0] + vector0[1] * vector1[1] + vector0[2] * vector1[2];
             return dotProd;
         }
-        private static double magnitude(double[] vector)
+        private static double Magnitude(double[] vector)
         {
             // Magnitude or Length of a Vector
             // |v| = √(x^2 + y^2 + z^2)
-            double x = vector[0];
-            double y = vector[1];
-            double z = vector[2];
-            double magOfVector = Math.Sqrt( Math.Pow(x, 2) + Math.Pow(y, 2) + Math.Pow(z, 2) );
+            double magOfVector = Math.Sqrt( Math.Pow(vector[0], 2) + Math.Pow(vector[1], 2) + Math.Pow(vector[2], 2) );
             return magOfVector;
+        }
+        private static double AngleBetweenVectors(double[] vector0, double[] vector1)
+        {
+            double theta = Math.Acos(DotProduct(vector0,vector1)/(Magnitude(vector0)*Magnitude(vector1)));
+            return theta;
+        }
+        private static double[] VectorFromPoints(double[] pointP, double[] pointQ)
+        {
+            double x = pointQ[0] - pointP[0];
+            double y = pointQ[1] - pointP[1];
+            double z = pointQ[2] - pointP[2];
+            double[] vectorPQ = { x, y, z };
+            return vectorPQ;
+        }
+        private static double SolveTriangleSAS(double side0, double angle, double side1)
+        {
+            // a^2 = b^2 + c^2 − 2bc*cosA
+            double side2 = Math.Sqrt(Math.Pow(side0, 2) + Math.Pow(side1, 2) - 2 * side0 * side1 * Math.Cos(angle));
+            return side2;
         }
     }
 }
