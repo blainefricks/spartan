@@ -14,5 +14,5 @@ Open `Program.exe` to launch the console application.
 C# programs don't run natively on Macs, so Mono is needed. [Download here] (http://www.mono-project.com/download/).
 Once Mono is installed, open Terminal and run:
 ```
-mono .../Program.exe
+mono Program.exe
 ```
