@@ -11,6 +11,8 @@ namespace Spartan_HUD
         static void Main(string[] args)
         {
             Console.WriteLine("");
+            Console.WriteLine("All units are in feet (ft).");
+            Console.WriteLine("");
             // pointA values
             Console.WriteLine("Eye Coordinates");
             Console.Write("x = ");
@@ -54,7 +56,7 @@ namespace Spartan_HUD
             Console.WriteLine("");
 
             // Angle at pointB
-            Console.WriteLine("Angle's of Gun ");
+            Console.WriteLine("Angle's of Gun in degrees");
             Console.Write("zy angle = ");
             double phiB = DegreeToRadian(Convert.ToDouble(Console.ReadLine())); // Console Input Build
             // double phiB = DegreeToRadian(90); // Debug

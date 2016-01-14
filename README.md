@@ -4,6 +4,9 @@ This progaram finds the 3D coordinates of where your gun is pointing and project
 
 Since HoloLens has yet to be released, this is just a console application that calculates the unknown coordinates.
 
+## Console Preview
+![Image of Console Preview](asssts/spartan-console-preview.png)
+
 ## Windows
 Open `Program.exe` to launch the console application.
 
