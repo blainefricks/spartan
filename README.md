@@ -1,4 +1,5 @@
-﻿# Spartan HUD
+# Spartan HUD
+######v1.0.1
 
 This progaram finds the 3D coordinates of where your gun is pointing and projects a target reticle using Microsoft HoloLens.
 
